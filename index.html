@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smiling Rocks Order Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A101D">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SR Orders">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  html,body{margin:0;height:100%;background:#0A101D;color:#E8EBF1;font-family:-apple-system,Roboto,Arial,sans-serif}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0A101D}
+  .box{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;text-align:center}
+  .box.show{display:flex}
+  .box img{width:88px;height:88px;border-radius:22px}
+  .box h1{margin:0;font-size:22px;color:#F4E6B3}
+  .box p{margin:0;color:#97A3B8;font-size:14px;line-height:1.5;max-width:320px}
+  .box a{background:#D9B649;color:#0A101D;text-decoration:none;font-weight:700;border-radius:14px;padding:14px 22px;min-height:48px;display:inline-flex;align-items:center}
+</style>
+</head>
+<body>
+<!-- ▼▼▼  PASTE YOUR DASHBOARD WEB APP LINK BETWEEN THE QUOTES  ▼▼▼ -->
+<script>var DASHBOARD_URL = 'https://https://script.google.com/a/macros/smilingrocks.com/s/AKfycbzU__sj30xRLY-YDyZQ5vrR4kn7LFo9t6LUs1e4qGfwbnoVbhRPltuEKIy_SHUzQ4icWA/exec';</script>
+<!-- ▲▲▲ ----------------------------------------------------------- -->
+
+<iframe id="app" title="Smiling Rocks Order Status" allow="clipboard-write"></iframe>
+<div class="box" id="box">
+  <img src="icon-192.png" alt="">
+  <h1>Smiling Rocks Order Status</h1>
+  <p id="msg">Sign in with your smilingrocks.com Google account to open the dashboard.</p>
+  <a id="open" href="#">Open Dashboard</a>
+</div>
+<script>
+  var ok = false, f = document.getElementById('app');
+  document.getElementById('open').href = DASHBOARD_URL;
+  if (DASHBOARD_URL.indexOf('PASTE-YOUR-ID') >= 0) {
+    document.getElementById('msg').textContent = 'Setup needed: paste your dashboard link into index.html.';
+    document.getElementById('box').classList.add('show');
+  } else {
+    f.src = DASHBOARD_URL;
+    window.addEventListener('message', function (e) { if (e.data === 'sr-dash-ok') { ok = true; document.getElementById('box').classList.remove('show'); } });
+    // If the dashboard has not loaded inside the app (e.g. Google sign-in needed), offer to open it directly
+    setTimeout(function () { if (!ok) { f.style.display = 'none'; document.getElementById('box').classList.add('show'); } }, 12000);
+  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
